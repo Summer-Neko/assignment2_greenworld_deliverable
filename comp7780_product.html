@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products | NexusSix</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+    <header>
+        <div class="header-inner">
+            <div class="logo">GREEN WORLD.</div>
+            <div class="header-right">
+                <div class="team-info">Team No.6: NexusSix</div>
+                <span style="color: rgba(255,255,255,0.1);">|</span>
+                <a href="/" class="back-link">Back to Home</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div style="text-align: center; margin-bottom: 80px;" class="animate-entry">
+            <h2 style="font-size: 2.5rem;">Curated Finds</h2>
+            <p style="color: var(--text-muted);">Selected with care. Restored with love.</p>
+        </div>
+
+        <div class="product-grid">
+
+            <article class="product-card animate-entry delay-1">
+                <img src="/assets/product1.avif" alt="Book" class="product-img">
+                <div class="product-info">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <h3>Vintage Books</h3>
+                        <span style="color: var(--accent-gold); font-size: 1.2rem; font-family: 'Playfair Display', serif;">$2.98</span>
+                    </div>
+                    <p style="font-size: 0.9rem; color: #888; margin-top: 10px;">A collection of classic literature, preserved in excellent condition.</p>
+                    <button class="btn-cart" onclick="addToCart(this)">Add to Cart</button>
+                </div>
+            </article>
+
+            <article class="product-card animate-entry delay-2">
+                <img src="/assets/product2.avif" alt="Camera" class="product-img">
+                <div class="product-info">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <h3>Film Camera</h3>
+                        <span style="color: var(--accent-gold); font-size: 1.2rem; font-family: 'Playfair Display', serif;">$4.50</span>
+                    </div>
+                    <p style="font-size: 0.9rem; color: #888; margin-top: 10px;">Functional analog aesthetics. Capture moments the old school way.</p>
+                    <button class="btn-cart" onclick="addToCart(this)">Add to Cart</button>
+                </div>
+            </article>
+
+            <article class="product-card animate-entry delay-3">
+                <img src="/assets/product3.avif" alt="Plant" class="product-img">
+                <div class="product-info">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <h3>Artisan Pot</h3>
+                        <span style="color: var(--accent-gold); font-size: 1.2rem; font-family: 'Playfair Display', serif;">$9.98</span>
+                    </div>
+                    <p style="font-size: 0.9rem; color: #888; margin-top: 10px;">Handcrafted ceramic pot. Perfect for your indoor green sanctuary.</p>
+                    <button class="btn-cart" onclick="addToCart(this)">Add to Cart</button>
+                </div>
+            </article>
+
+            <article class="product-card animate-entry delay-1">
+            <img src="/assets/product4.avif" alt="Bamboo Toothbrush" class="product-img">
+            <div class="product-info">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                    <h3>Bamboo Toothbrush Set</h3>
+                    <span style="color: var(--accent-gold); font-size: 1.2rem; font-family: 'Playfair Display', serif;">$3.99</span>
+                </div>
+                <p style="font-size: 0.9rem; color: #888; margin-top: 10px;">Biodegradable bamboo toothbrushes with charcoal bristles. Zero waste solution.</p>
+                <button class="btn-cart" onclick="addToCart(this)">Add to Cart</button>
+            </div>
+        </article>
+
+        <article class="product-card animate-entry delay-2">
+            <img src="/assets/product5.avif" alt="Reusable Bag" class="product-img">
+            <div class="product-info">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                    <h3>Organic Cotton Tote Bag</h3>
+                    <span style="color: var(--accent-gold); font-size: 1.2rem; font-family: 'Playfair Display', serif;">$5.50</span>
+                </div>
+                <p style="font-size: 0.9rem; color: #888; margin-top: 10px;">Handmade from organic cotton. Say no to plastic bags sustainably.</p>
+                <button class="btn-cart" onclick="addToCart(this)">Add to Cart</button>
+            </div>
+        </article>
+
+        <article class="product-card animate-entry delay-3">
+            <img src="/assets/product6.avif" alt="Beeswax Wrap" class="product-img">
+            <div class="product-info">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                    <h3>Beeswax Food Wraps</h3>
+                    <span style="color: var(--accent-gold); font-size: 1.2rem; font-family: 'Playfair Display', serif;">$7.25</span>
+                </div>
+                <p style="font-size: 0.9rem; color: #888; margin-top: 10px;">Reusable food storage wraps. Eco-friendly alternative to plastic wrap.</p>
+                <button class="btn-cart" onclick="addToCart(this)">Add to Cart</button>
+            </div>
+        </article>
+
+        <article class="product-card animate-entry delay-1">
+            <img src="/assets/product7.avif" alt="Solar Lamp" class="product-img">
+            <div class="product-info">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                    <h3>Solar Powered Lantern</h3>
+                    <span style="color: var(--accent-gold); font-size: 1.2rem; font-family: 'Playfair Display', serif;">$12.99</span>
+                </div>
+                <p style="font-size: 0.9rem; color: #888; margin-top: 10px;">Charge with sunlight, light up your evenings. 100% renewable energy.</p>
+                <button class="btn-cart" onclick="addToCart(this)">Add to Cart</button>
+            </div>
+        </article>
+
+        <article class="product-card animate-entry delay-2">
+            <img src="/assets/product8.avif" alt="Compost Bin" class="product-img">
+            <div class="product-info">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                    <h3>Ceramic Compost Bin</h3>
+                    <span style="color: var(--accent-gold); font-size: 1.2rem; font-family: 'Playfair Display', serif;">$8.75</span>
+                </div>
+                <p style="font-size: 0.9rem; color: #888; margin-top: 10px;">Kitchen compost collector with charcoal filter. Turn waste into garden gold.</p>
+                <button class="btn-cart" onclick="addToCart(this)">Add to Cart</button>
+            </div>
+        </article>
+
+        <article class="product-card animate-entry delay-3">
+            <img src="/assets/product9.avif" alt="Reusable Bottle" class="product-img">
+            <div class="product-info">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                    <h3>Stainless Steel Water Bottle</h3>
+                    <span style="color: var(--accent-gold); font-size: 1.2rem; font-family: 'Playfair Display', serif;">$6.99</span>
+                </div>
+                <p style="font-size: 0.9rem; color: #888; margin-top: 10px;">Double-walled insulation. Ditch single-use plastic bottles forever.</p>
+                <button class="btn-cart" onclick="addToCart(this)">Add to Cart</button>
+            </div>
+        </article>
+
+        </div>
+
+        <section class="glass-panel animate-entry delay-3" style="margin-top: 80px; text-align: center; border: 1px dashed var(--accent-gold);">
+            <h3 style="color: var(--accent-gold);">Policy Note</h3>
+            <p style="margin-top: 10px; font-size: 0.9rem;">All sales are Final. No refund or exchange.</p>
+            <p style="font-size: 0.9rem;">Payment confirmation will be followed by delivery scheduling.</p>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="footer-inner">
+            <div class="team-list">
+                <div class="team-item"><span class="role">PM:</span> SONG Youxue (25408828) <span class="separator">|</span></div>
+                <div class="team-item"><span class="role">Analyst:</span> WU Xiao (25469924) <span class="separator">|</span></div>
+                <div class="team-item"><span class="role">Analyst:</span> LIU Shanghua (25423819) <span class="separator">|</span></div>
+                <div class="team-item"><span class="role">Dev:</span> ZHOU Wenpeng (25450662) <span class="separator">|</span></div>
+                <div class="team-item"><span class="role">Dev:</span> LI Zhenrong (25428020) <span class="separator">|</span></div>
+                <div class="team-item"><span class="role">Tester:</span> REN Ruyi (25443607)</div>
+            </div>
+            <p style="opacity: 0.4; margin-top: 10px;">&copy; 2026 Green World. COMP 7780 Assignment #1.</p>
+        </div>
+    </footer>
+
+    <script>
+        function addToCart(btn) {
+            if (btn.classList.contains('added')) return;
+
+            const originalText = btn.innerText;
+
+            btn.innerText = "✓ Added";
+            btn.classList.add('added');
+
+            setTimeout(() => {
+                btn.classList.remove('added');
+                btn.innerText = originalText;
+            }, 700);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,188 @@
+:root {
+    --bg-color: #0b1a15;
+    --card-bg: rgba(255, 255, 255, 0.03);
+    --text-main: #f0f0f0;
+    --text-muted: #a0a0a0;
+    --accent-gold: #d4af37;
+    --accent-green: #2e8b57;
+    --accent-glow: rgba(212, 175, 55, 0.3);
+    --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    line-height: 1.7;
+    overflow-x: hidden;
+}
+
+h1, h2, h3 { font-family: 'Georgia', 'Times New Roman', Times, serif; color: var(--text-main); }
+a { text-decoration: none; color: inherit; transition: var(--transition); }
+ul { list-style: none; }
+
+/* --- Header & Nav --- */
+header {
+    position: fixed; top: 0; width: 100%; padding: 20px 0; z-index: 1000;
+    background: rgba(11, 26, 21, 0.85); backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.header-inner {
+    max-width: 1400px; margin: 0 auto; padding: 0 40px;
+    display: flex; justify-content: space-between; align-items: center;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.team-info {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+.logo { font-size: 1.5rem; font-weight: 700; color: var(--accent-gold); letter-spacing: 1px; }
+
+.back-link {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    position: relative;
+    padding-left: 20px;
+    transition: var(--transition);
+}
+.back-link::before {
+    content: '←';
+    position: absolute; left: 0; top: 0;
+    transition: transform 0.3s ease;
+}
+.back-link:hover { color: var(--accent-gold); }
+.back-link:hover::before { transform: translateX(-5px); } /* 箭头向左动 */
+
+/* --- Hero Section (Faster Animation) --- */
+.hero {
+    height: 85vh;
+    display: flex; align-items: center; justify-content: center; text-align: center;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.3), var(--bg-color)),
+                url('assets/background.avif');
+    background-attachment: fixed;
+    background-position: center; background-size: cover;
+    position: relative;
+}
+
+.hero-content {
+    opacity: 0;
+    /* 速度优化：由1.2s改为0.8s，延迟由0.5s改为0.1s */
+    animation: fadeInUp 0.8s ease-out forwards 0.1s;
+    z-index: 2;
+}
+
+.hero h1 { font-size: 4.5rem; margin-bottom: 20px; text-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+
+/* --- Buttons --- */
+.btn-main {
+    position: relative; padding: 15px 50px; background: var(--accent-gold);
+    color: #0b1a15; font-weight: 600; text-transform: uppercase; letter-spacing: 2px;
+    overflow: hidden; display: inline-block;
+}
+.btn-main::before {
+    content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    transition: 0.5s;
+}
+.btn-main:hover::before { left: 100%; }
+.btn-main:hover { box-shadow: 0 0 30px var(--accent-glow); transform: translateY(-3px); }
+
+/* --- Add to Cart Button (Interactive) --- */
+.btn-cart {
+    margin-top: 20px;
+    background: transparent;
+    border: 1px solid var(--text-muted);
+    color: var(--text-main);
+    padding: 10px 25px;
+    cursor: pointer;
+    border-radius: 30px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    transition: all 0.2s ease; /* 快速响应 */
+    outline: none;
+    min-width: 140px; /* 保持宽度一致，防止文字变化时抖动 */
+}
+
+.btn-cart:hover {
+    border-color: var(--accent-gold);
+    color: var(--accent-gold);
+    background: rgba(212, 175, 55, 0.05);
+}
+
+.btn-cart:active { transform: scale(0.95); } /* 点击时的缩放感 */
+
+/* JavaScript 触发的 Added 状态 */
+.btn-cart.added {
+    background-color: var(--accent-green);
+    border-color: var(--accent-green);
+    color: white;
+    box-shadow: 0 0 20px rgba(46, 139, 87, 0.4);
+}
+
+/* --- Layout Containers --- */
+.container { max-width: 1200px; margin: 100px auto; padding: 0 20px; }
+
+.glass-panel {
+    background: var(--card-bg); border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 50px; border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    backdrop-filter: blur(10px); transition: var(--transition);
+}
+.glass-panel:hover { border-color: rgba(212, 175, 55, 0.3); }
+
+/* --- Product Grid --- */
+.product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
+.product-card {
+    background: var(--card-bg); border-radius: 15px; overflow: hidden;
+    transition: var(--transition); border: 1px solid transparent;
+}
+.product-card:hover {
+    transform: translateY(-15px) scale(1.02);
+    border-color: var(--accent-gold);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+.product-img { width: 100%; height: 280px; object-fit: cover; transition: transform 0.8s ease; }
+.product-card:hover .product-img { transform: scale(1.1); }
+.product-info { padding: 30px; }
+
+/* --- Footer --- */
+footer {
+    background: #050e0b; border-top: 1px solid rgba(255,255,255,0.05);
+    padding: 30px 0; margin-top: 100px; font-size: 0.8rem; color: var(--text-muted);
+}
+.footer-inner { max-width: 1400px; margin: 0 auto; text-align: center; }
+.team-list {
+    display: flex; justify-content: center; flex-wrap: wrap;
+    gap: 15px; margin-bottom: 15px; padding: 0 20px;
+}
+.team-item { display: inline-flex; align-items: center; white-space: nowrap; }
+.team-item span.role { color: var(--accent-gold); margin-right: 5px; font-weight: 600; }
+.team-item span.separator { margin-left: 15px; color: #333; }
+
+/* --- Animations --- */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); } /* 距离缩短，更干脆 */
+    to { opacity: 1; transform: translateY(0); }
+}
+.animate-entry { opacity: 0; animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+
+@media (max-width: 768px) {
+    .hero h1 { font-size: 2.5rem; }
+    .team-list { flex-direction: column; gap: 5px; }
+    .team-item span.separator { display: none; }
+}
