@@ -1,33 +1,55 @@
-var express = require('express');
-var path = require('path');
-var app = express();
+const express = require('express');
+const path = require('path');
+const mysql = require('mysql2');
+const multer = require('multer');
+const fs = require('fs');
 
-// 核心：托管 public 文件夹下的静态资源 (CSS, 图像等)
+const app = express();
+app.use(express.json());
 app.use(express.static('public'));
 
-// 路由：访问根目录 '/' 时，返回主页 HTML
-app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname, "comp7780_home.html"));
+const pool = mysql.createPool({
+    host: 'localhost', user: 'user99', password: 'user99', database: 'comp7780'
 });
 
-// 路由：访问 '/product' 时，返回产品页 HTML
-app.get('/product', function(req, res) {
-    res.sendFile(path.join(__dirname, "comp7780_product.html"));
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        const dir = './public/assets';
+        if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+        cb(null, dir);
+    },
+    filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname))
+});
+const upload = multer({ storage });
+
+// 路由
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, "comp7780_home.html")));
+app.get('/product', (req, res) => res.sendFile(path.join(__dirname, "comp7780_product.html")));
+app.get('/admin', (req, res) => res.sendFile(path.join(__dirname, "admin.html")));
+
+// API: 获取商品
+app.get('/api/products', (req, res) => {
+    pool.query('SELECT * FROM products', (err, results) => res.json(results));
 });
 
-// 为 Cycle 3 预留的接口
-app.get('/cart', function(req, res) {
-    res.send("Add Cart - Next step: Need MySQL integration!");
+// API: 添加商品 (后台)
+app.post('/api/products', upload.single('productImage'), (req, res) => {
+    const { name, price, description, stock } = req.body;
+    const img = req.file ? `/assets/${req.file.filename}` : '/assets/default.avif';
+    pool.query('INSERT INTO products (name, price, description, image_url, stock) VALUES (?,?,?,?,?)', 
+    [name, price, description, img, stock], () => res.json({ success: true }));
 });
 
-app.get('/check_out', function(req, res) {
-    res.send("Check Out - Next step: Need MySQL integration!");
+// API: 删除商品 (后台)
+app.delete('/api/products/:id', (req, res) => {
+    pool.query('DELETE FROM products WHERE id = ?', [req.params.id], () => res.json({ success: true }));
 });
 
-// 监听端口 (根据老师文档，端口用 3000 或默认的 80)
-const PORT = 3000;
-app.listen(PORT, function() {
-    console.log(`NexusSix Web Server listening on http://localhost:${PORT}/`);
+// API: 获取订单 (后台)
+app.get('/api/admin/orders', (req, res) => {
+    pool.query('SELECT * FROM orders ORDER BY created_at DESC', (err, reslt) => res.json(reslt));
 });
 
-console.log('Server is running...');
+app.listen(3000, '0.0.0.0', () => {
+  console.log('Server running at http://localhost:3000');
+});

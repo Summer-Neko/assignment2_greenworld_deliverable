@@ -6,7 +6,8 @@
     --accent-gold: #d4af37;
     --accent-green: #2e8b57;
     --accent-glow: rgba(212, 175, 55, 0.3);
-    --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    /* 优化：修改为更标准的平滑过渡曲线，减少卡顿感 */
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -27,8 +28,11 @@ ul { list-style: none; }
 /* --- Header & Nav --- */
 header {
     position: fixed; top: 0; width: 100%; padding: 20px 0; z-index: 1000;
-    background: rgba(11, 26, 21, 0.85); backdrop-filter: blur(15px);
+    /* 优化：提高背景不透明度，降低 blur 数值，大幅减少浏览器渲染压力（解决顿挫感核心） */
+    background: rgba(11, 26, 21, 0.95); 
+    backdrop-filter: blur(8px);
     border-bottom: 1px solid rgba(255,255,255,0.05);
+    will-change: transform;
 }
 
 .header-inner {
@@ -63,9 +67,38 @@ header {
     transition: transform 0.3s ease;
 }
 .back-link:hover { color: var(--accent-gold); }
-.back-link:hover::before { transform: translateX(-5px); } /* 箭头向左动 */
+.back-link:hover::before { transform: translateX(-5px); } 
 
-/* --- Hero Section (Faster Animation) --- */
+/* --- 侧边购物车抽屉 (Cart Drawer) --- */
+.cart-drawer {
+    position: fixed; top: 0; right: -400px; width: 380px; height: 100%;
+    background: #0d211a; z-index: 2000;
+    box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+    transition: right 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    display: flex; flex-direction: column; padding: 30px;
+}
+.cart-drawer.open { right: 0; }
+
+.cart-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.7); display: none; z-index: 1999;
+}
+.cart-overlay.show { display: block; }
+
+.cart-header { 
+    display: flex; justify-content: space-between; align-items: center; 
+    border-bottom: 1px solid #222; padding-bottom: 15px; 
+}
+.cart-items { flex: 1; overflow-y: auto; margin-top: 20px; }
+.cart-item { 
+    display: flex; gap: 15px; margin-bottom: 20px; align-items: center; 
+    border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 10px; 
+}
+.cart-item img { width: 60px; height: 60px; object-fit: cover; border-radius: 5px; }
+.cart-footer { padding-top: 20px; border-top: 1px solid #222; }
+
+
+/* --- Hero Section --- */
 .hero {
     height: 85vh;
     display: flex; align-items: center; justify-content: center; text-align: center;
@@ -78,7 +111,6 @@ header {
 
 .hero-content {
     opacity: 0;
-    /* 速度优化：由1.2s改为0.8s，延迟由0.5s改为0.1s */
     animation: fadeInUp 0.8s ease-out forwards 0.1s;
     z-index: 2;
 }
@@ -89,7 +121,7 @@ header {
 .btn-main {
     position: relative; padding: 15px 50px; background: var(--accent-gold);
     color: #0b1a15; font-weight: 600; text-transform: uppercase; letter-spacing: 2px;
-    overflow: hidden; display: inline-block;
+    overflow: hidden; display: inline-block; cursor: pointer; border: none;
 }
 .btn-main::before {
     content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
@@ -101,34 +133,22 @@ header {
 
 /* --- Add to Cart Button (Interactive) --- */
 .btn-cart {
-    margin-top: 20px;
-    background: transparent;
-    border: 1px solid var(--text-muted);
-    color: var(--text-main);
-    padding: 10px 25px;
-    cursor: pointer;
-    border-radius: 30px;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 500;
-    transition: all 0.2s ease; /* 快速响应 */
-    outline: none;
-    min-width: 140px; /* 保持宽度一致，防止文字变化时抖动 */
+    margin-top: 20px; background: transparent; border: 1px solid var(--text-muted);
+    color: var(--text-main); padding: 10px 25px; cursor: pointer; border-radius: 30px;
+    font-family: 'Montserrat', sans-serif; font-weight: 500;
+    transition: all 0.2s ease; outline: none; min-width: 140px;
 }
 
 .btn-cart:hover {
-    border-color: var(--accent-gold);
-    color: var(--accent-gold);
+    border-color: var(--accent-gold); color: var(--accent-gold);
     background: rgba(212, 175, 55, 0.05);
 }
 
-.btn-cart:active { transform: scale(0.95); } /* 点击时的缩放感 */
+.btn-cart:active { transform: scale(0.95); } 
 
-/* JavaScript 触发的 Added 状态 */
 .btn-cart.added {
-    background-color: var(--accent-green);
-    border-color: var(--accent-green);
-    color: white;
-    box-shadow: 0 0 20px rgba(46, 139, 87, 0.4);
+    background-color: var(--accent-green); border-color: var(--accent-green);
+    color: white; box-shadow: 0 0 20px rgba(46, 139, 87, 0.4);
 }
 
 /* --- Layout Containers --- */
@@ -173,7 +193,8 @@ footer {
 
 /* --- Animations --- */
 @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(30px); } /* 距离缩短，更干脆 */
+    /* 优化：距离缩短至 15px，减轻动画带来的渲染抖动 */
+    from { opacity: 0; transform: translateY(15px); } 
     to { opacity: 1; transform: translateY(0); }
 }
 .animate-entry { opacity: 0; animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
@@ -185,4 +206,5 @@ footer {
     .hero h1 { font-size: 2.5rem; }
     .team-list { flex-direction: column; gap: 5px; }
     .team-item span.separator { display: none; }
+    .cart-drawer { width: 100%; right: -100%; } /* 移动端购物车全屏适配 */
 }
